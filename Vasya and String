@@ -1,0 +1,33 @@
+https://codeforces.com/problemset/problem/676/C
+
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        String str = sc.next();
+        
+        int cntA = 0;
+        int cntB = 0;
+        int left = 0;
+        int max = 1;
+        for(int right = 0; right < str.length(); right++) {
+
+            if(str.charAt(right) == 'a') cntA++;
+            else cntB++;
+
+            while(cntA > k && cntB > k) {
+                if(str.charAt(left) == 'a') cntA--;
+                else cntB--;
+                left++;
+            }
+
+            max = Math.max(max, right - left + 1);
+        }
+        System.out.println(max);
+        
+    }
+}
