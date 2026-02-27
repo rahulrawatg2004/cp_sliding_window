@@ -1,0 +1,79 @@
+https://codeforces.com/contest/1234/problem/B2
+
+
+🚨 Why TLE Happened?
+
+Because of this line:
+
+dq.contains(arr[i])
+❌ contains() in Deque is O(n)
+
+Internally it iterates through entire deque.
+
+So your total complexity becomes:
+
+For each element → O(k)
+Total → O(n * k)
+
+Worst case:
+
+200000 * 100000 = 20,000,000,000 operations
+
+💀 Impossible within time limit.
+
+🔥 Why Small Tests Passed?
+
+Because n was small (≤ 200).
+
+Large input exposed your time complexity issue.
+
+✅ Correct Efficient Approach (O(n))
+
+Use Deque + HashSet
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        
+        int arr[] = new int[n];
+        for(int i = 0; i < n; i++){
+            arr[i] = sc.nextInt();
+        }
+
+        Deque<Integer> dq = new ArrayDeque<>();
+        HashSet<Integer> set = new HashSet<>();
+
+        for(int i = 0; i < n; i++){
+
+            if(!set.contains(arr[i])) {
+                dq.addFirst(arr[i]);
+                set.add(arr[i]);
+            }
+
+            if(dq.size() > k){
+                int removed = dq.removeLast();
+                set.remove(removed);
+            }
+        }
+
+        System.out.println(dq.size());
+
+        while(!dq.isEmpty()){
+            System.out.print(dq.removeFirst() + " ");
+        }
+    }
+}
+🚀 Now Complexity
+Operation	Time
+set.contains	O(1)
+add/remove deque	O(1)
+
+Total:
+
+O(n)
+
+Even for 200000 → fast.
