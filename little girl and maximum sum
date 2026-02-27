@@ -1,0 +1,137 @@
+https://codeforces.com/contest/276/problem/C
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+
+        long[] arr = new long[n];
+
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            arr[i] = Long.parseLong(st.nextToken());
+        }
+
+        long[] diff = new long[n + 2];
+
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int l = Integer.parseInt(st.nextToken());
+            int r = Integer.parseInt(st.nextToken());
+
+            diff[l]++;
+            diff[r + 1]--;
+        }
+
+        long[] counts = new long[n];
+        long current = 0;
+
+        for (int i = 1; i <= n; i++) {
+            current += diff[i];
+            counts[i - 1] = current;
+        }
+
+        Arrays.sort(arr);
+        Arrays.sort(counts);
+
+        long total = 0;
+
+        for (int i = 0; i < n; i++) {
+            total += arr[i] * counts[i];
+        }
+
+        System.out.println(total);
+    }
+}
+
+
+🔴 Why Scanner Is Slow
+
+When you write:
+
+Scanner sc = new Scanner(System.in);
+int n = sc.nextInt();
+Internally Scanner:
+
+Reads input
+
+Uses regex parsing
+
+Splits tokens
+
+Converts to integer
+
+Does safety checks
+
+👉 That regex parsing makes it slow.
+
+For small input → OK
+For 200,000+ numbers → TLE
+
+🟢 What BufferedReader Does
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+BufferedReader:
+
+Reads a full line at once
+
+Stores it in memory buffer
+
+Does NOT parse anything
+
+Very minimal overhead
+
+It is just a fast raw reader.
+
+Example:
+
+String line = br.readLine();
+
+This reads the whole line as a string.
+
+Fast.
+
+🔵 Then What Is StringTokenizer?
+
+After reading a full line:
+
+String line = "200000 200000";
+
+We need to split it into numbers.
+
+Instead of using:
+
+line.split(" ")
+
+(which uses regex → slow)
+
+We use:
+
+StringTokenizer st = new StringTokenizer(line);
+
+Then:
+
+int n = Integer.parseInt(st.nextToken());
+int m = Integer.parseInt(st.nextToken());
+
+StringTokenizer is much faster because:
+
+No regex
+
+Just splits by space
+
+Lightweight
+
+⚡ Speed Comparison
+Method	Speed
+Scanner	Slow
+split()	Medium
+BufferedReader + StringTokenizer	Fast
