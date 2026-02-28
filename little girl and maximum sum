@@ -135,3 +135,166 @@ Method	Speed
 Scanner	Slow
 split()	Medium
 BufferedReader + StringTokenizer	Fast
+
+
+🔹 Suppose Input Is:
+5 3
+10 20 30 40 50
+1 3
+2 4
+1 5
+🔹 Step 1
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+What is in br?
+
+br does not store the input.
+
+It is just a reader object connected to standard input (keyboard).
+
+Think of it as:
+
+📥 A pipe that can read lines from input.
+
+It waits until you call:
+
+br.readLine()
+🔹 Step 2
+StringTokenizer st = new StringTokenizer(br.readLine());
+What happens here?
+
+br.readLine() reads the first full line:
+
+"5 3"
+
+That string is passed to StringTokenizer
+
+So now:
+
+st contains tokens: ["5", "3"]
+
+It splits the string by spaces.
+
+🔹 Step 3
+int n = Integer.parseInt(st.nextToken());
+
+st.nextToken() returns:
+
+"5"
+
+Now:
+
+n = 5
+
+Remaining tokens in st:
+
+["3"]
+🔹 Step 4
+int m = Integer.parseInt(st.nextToken());
+
+st.nextToken() returns:
+
+"3"
+
+Now:
+
+m = 3
+
+Now st is empty (no tokens left).
+
+🔹 Step 5
+st = new StringTokenizer(br.readLine());
+
+Now br.readLine() reads second line:
+
+"10 20 30 40 50"
+
+So now:
+
+st contains: ["10", "20", "30", "40", "50"]
+🔹 Step 6 (Inside Loop)
+arr[i] = Long.parseLong(st.nextToken());
+
+Each time nextToken() is called:
+
+Call	Returned	Remaining tokens
+1	"10"	["20","30","40","50"]
+2	"20"	["30","40","50"]
+3	"30"	["40","50"]
+4	"40"	["50"]
+5	"50"	[]
+
+After loop, st is empty again.
+
+🔹 Step 7 (Reading Queries)
+
+Inside:
+
+st = new StringTokenizer(br.readLine());
+
+Each time it reads a new query line.
+
+First Query
+
+br.readLine() reads:
+
+"1 3"
+
+Now:
+
+st = ["1", "3"]
+
+Then:
+
+int l = Integer.parseInt(st.nextToken()); // "1"
+int r = Integer.parseInt(st.nextToken()); // "3"
+
+Now st is empty again.
+
+Second Query
+
+br.readLine() reads:
+
+"2 4"
+
+Now:
+
+st = ["2", "4"]
+
+After nextToken() twice → empty again.
+
+🔥 Final Understanding
+br:
+
+It does NOT store all input.
+
+It reads one full line when readLine() is called.
+
+Returns that line as a String.
+
+st:
+
+Stores tokens of only one line at a time.
+
+Splits line into pieces separated by space.
+
+nextToken() gives next piece.
+
+🧠 Visual Flow
+Input → br.readLine() → String line
+String line → StringTokenizer → tokens
+tokens → nextToken() → individual numbers
+⚡ Why Not Use Scanner?
+
+Scanner is slower because:
+
+It does parsing internally
+
+More overhead
+
+BufferedReader + StringTokenizer is much faster for competitive programming.
+
+If you want, I can also explain:
+
+What happens internally when nextToken() is called
+
+Or how to replace this using split() instead
