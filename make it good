@@ -1,0 +1,39 @@
+https://codeforces.com/problemset/problem/1385/C
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        
+        while (t-- > 0) {
+            int n = sc.nextInt();
+            int[] a = new int[n];
+            
+            for (int i = 0; i < n; i++) {
+                a[i] = sc.nextInt();
+            }
+            
+            int i = 0;
+            
+            // Step 1: non-decreasing part
+            while (i + 1 < n && a[i] <= a[i + 1]) {
+                i++;
+            }
+            
+            // Step 2: non-increasing part
+            while (i + 1 < n && a[i] >= a[i + 1]) {
+                i++;
+            }
+            
+            if (i == n - 1) {
+                System.out.println(0);
+            } else {
+                System.out.println(i + 1);
+            }
+        }
+        
+        sc.close();
+    }
+}
