@@ -6,34 +6,30 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int t = sc.nextInt();
-        
+
         while (t-- > 0) {
             int n = sc.nextInt();
             int[] a = new int[n];
-            
-            for (int i = 0; i < n; i++) {
-                a[i] = sc.nextInt();
+
+            for (int j = 0; j < n; j++) {
+                a[j] = sc.nextInt();
             }
-            
-            int i = 0;
-            
-            // Step 1: non-decreasing part
-            while (i + 1 < n && a[i] <= a[i + 1]) {
-                i++;
+
+            int i = n - 1;
+
+            // Step 1: move while non-increasing
+            while (i > 0 && a[i - 1] >= a[i]) {
+                i--;
             }
-            
-            // Step 2: non-increasing part
-            while (i + 1 < n && a[i] >= a[i + 1]) {
-                i++;
+
+            // Step 2: move while non-decreasing
+            while (i > 0 && a[i - 1] <= a[i]) {
+                i--;
             }
-            
-            if (i == n - 1) {
-                System.out.println(0);
-            } else {
-                System.out.println(i + 1);
-            }
+
+            System.out.println(i);
         }
-        
+
         sc.close();
     }
 }
