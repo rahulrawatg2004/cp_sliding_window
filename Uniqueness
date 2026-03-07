@@ -1,0 +1,45 @@
+https://codeforces.com/problemset/problem/1208/B
+
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int[] a = new int[n];
+
+        for(int i = 0; i < n; i++){
+            a[i] = sc.nextInt();
+        }
+
+        HashSet<Integer> set = new HashSet<>();
+
+        int left = 0;
+
+        while(left < n && !set.contains(a[left])){
+            set.add(a[left]);
+            left++;
+        }
+
+        int ans = n - left;
+
+        for(int right = n - 1; right >= 0; right--){
+
+            while(left > 0 && set.contains(a[right])){
+                left--;
+                set.remove(a[left]);
+            }
+
+            if(set.contains(a[right])) break;
+
+            set.add(a[right]);
+
+            ans = Math.min(ans, right - left);
+        }
+
+        System.out.println(ans);
+    }
+}
