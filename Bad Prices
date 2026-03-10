@@ -1,0 +1,33 @@
+https://codeforces.com/problemset/problem/1213/B
+
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt();
+        for(int t=0;t<T;t++){
+            int n = sc.nextInt();
+            int arr[] = new int[n];
+            for(int i=0;i<n;i++){
+                arr[i] = sc.nextInt();
+            }
+            Stack<Integer> st = new Stack<>();
+            int count = 0;
+            st.push(arr[n-1]);
+            for(int i=n-2;i>=0;i--){
+                while(!st.isEmpty() && st.peek()>=arr[i]){
+                    st.pop();
+                }
+                if(st.isEmpty()){
+                    count++;
+                }
+                if(st.isEmpty() || arr[i]<st.peek()){
+                    st.push(arr[i]);
+                }
+            }
+            System.out.println(n-count-1);
+        }
+    }
+}
